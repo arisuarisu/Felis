@@ -5,7 +5,6 @@ let Session = require("supertokens-node/recipe/session");
 
 router.get('/', Session.verifySession(), async function(req, res, next) {
   try {
-      console.log(req.body.name, "vypisujem server string")
     res.json(await cats.getCats());
   } catch (err) {
     console.error(`Error while getting cats`, err.message);
@@ -16,7 +15,6 @@ router.get('/', Session.verifySession(), async function(req, res, next) {
 router.post('/search', Session.verifySession(), async function(req, res, next) {
   let id = req.session.getUserId();
   try {
-      //console.log(req.body.name, "vypisujem server string")
     res.json(await cats.getCatsByName(req.body.name, id));
   } catch (err) {
     console.error(`Error while getting cats by name`, err.message);

@@ -1,9 +1,0 @@
-.ant-card-body {
-    
-    //border: 1px solid red;
-    display: flex;
-    flex-direction: column;
-    /* align-items: stretch; */
-    justify-content: end;
-    align-content: flex-end;
-}

@@ -4,12 +4,9 @@ const stays = require('../services/stays');
 let Session = require("supertokens-node/recipe/session");
 
 router.get('/active', Session.verifySession(), async function(req, res, next) {
-  //let role = req.session.getJWTPayload()["role"]
-  
   let id = req.session.getUserId();
   try {
     res.json(await stays.getMyActiveStay(id));
-    //res.json(await stays.checkCurrentStay(id));
   } catch (err) {
     console.error(`Error while getting active stay`, err.message);
     next(err);
@@ -17,12 +14,10 @@ router.get('/active', Session.verifySession(), async function(req, res, next) {
 });
 
 router.post('/setstay', Session.verifySession(), async function(req, res, next) {
-    //let role = req.session.getJWTPayload()["role"]
-    
     let id = req.session.getUserId();
     try {
       res.json(await stays.setStay(id, req.body.id, req.body.type));
-      //res.json(await stays.checkCurrentStay(id));
+
     } catch (err) {
       console.error(`Error while setting stay`, err.message);
       next(err);
@@ -30,12 +25,9 @@ router.post('/setstay', Session.verifySession(), async function(req, res, next) 
   });
 
   router.post('/cancelstay', Session.verifySession(), async function(req, res, next) {
-    //let role = req.session.getJWTPayload()["role"]
-    
     let id = req.session.getUserId();
     try {
       res.json(await stays.cancelStay(id, req.body.id, req.body.type));
-      //res.json(await stays.checkCurrentStay(id));
     } catch (err) {
       console.error(`Error while cancelling stay`, err.message);
       next(err);

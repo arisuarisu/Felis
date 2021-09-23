@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { signOut } from "supertokens-auth-react/recipe/emailpassword";
 import { Row, Col, Menu,  Layout, Avatar, Image, Typography, Divider } from 'antd';
-import { NavLink, Redirect } from  "react-router-dom";
+import { NavLink } from  "react-router-dom";
 import { useSelector } from 'react-redux';
 import {
   selectRole,
@@ -100,7 +100,6 @@ export function Navbar2() {
     else{
       return(
         <>
-        {/* <Redirect to="/"/> */}
         </>
       );
     }      

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from  "react-router-dom";
-//import { Mainscreen } from './features/mainscreen/Mainscreen';
+
 import './App.css';
 import { Layout } from 'antd';
 import { Navbar2 } from './features/navbar/Navbar2';
@@ -11,9 +11,7 @@ import { Dashboard } from './features/dashboard/Dashboard';
 import { Catshop } from './features/catshop/Catshop';
 import { Accomodation } from './features/accomodation/Accomodation';
 import { Catfriends } from './features/catfriends/Catfriends';
-// import {
-//     setReduxRole
-//   } from './features/rolechoice/rolechoiceSlice';
+
 import SuperTokens, { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react";
 import EmailPassword, {EmailPasswordAuth} from "supertokens-auth-react/recipe/emailpassword";
 import Session from "supertokens-auth-react/recipe/session";

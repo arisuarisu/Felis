@@ -29,9 +29,7 @@ const png='.png'
 
 export function Dashboard() {
     const dispatch = useDispatch();
-    //const visibleRolechoice = useSelector(selectVisible);
     const myItems = useSelector(selectMyshopitems);
-    //const myFriends = useSelector(selectMyfriends);
     const me = useSelector(selectMe);
     const active = useSelector(selectActive);
     const catfriends = useSelector(selectCatfriends);
@@ -45,7 +43,6 @@ export function Dashboard() {
         dispatch(getMe());
     }, [dispatch]);
     
-        //if(visibleRolechoice === true){
             if (role !== 'cat' && role !== 'owner' ) {
                 return(
                     <><Redirect to="/getrole"/></>
@@ -77,7 +74,7 @@ export function Dashboard() {
                                 style={active ? null : { opacity: '0.2' }}/>}>
                             <Row> 
                             {!active && <Col span={12} offset={12}><Button type='primary' style={{float: 'right'}}><NavLink to="/accomodation">Book a room</NavLink></Button></Col>}
-                            {active.name && <><Col span={12} style={{selfAlign: 'stretch'}}><div style={{position: 'absolute', bottom: 0}}>{active.name+'\'s place'}</div></Col><Col span={12}><Button style={{float: 'right'}} onClick={() => {dispatch(cancelStay({id: active.id, type: active.type}))}}>CANCEL STAY</Button></Col></>}
+                            {active.name && <><Col span={12} style={{selfAlign: 'stretch'}}><div style={{position: 'absolute', bottom: 0}}>{active.name}</div></Col><Col span={12}><Button style={{float: 'right'}} onClick={() => {dispatch(cancelStay({id: active.id, type: active.type}))}}>CANCEL STAY</Button></Col></>}
                             {active.nickname && <><Col span={12} style={{selfAlign: 'stretch'}}><div style={{position: 'absolute', bottom: 0}}>{active.nickname+'\'s place'}</div></Col><Col span={12}><Button style={{float: 'right'}} onClick={() => {dispatch(cancelStay({id: active.id, type: active.type}))}}>CANCEL STAY</Button></Col></>}
                             </Row>
                         </Card>}

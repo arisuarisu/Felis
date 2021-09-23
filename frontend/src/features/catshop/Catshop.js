@@ -6,7 +6,6 @@ import {
     fetchCatshopitems,
     buyItem
   } from './catshopSlice';
-//import './catshop.css'
 import { Card, Col, Row, Button, Avatar } from 'antd';
 import { Typography } from 'antd';
 

@@ -1,8 +1,6 @@
 DROP TABLE IF EXISTS owner CASCADE;
 DROP TABLE IF EXISTS cat CASCADE;
 DROP TABLE IF EXISTS shelter CASCADE;
--- DROP TABLE IF EXISTS owner_stay CASCADE;
--- DROP TABLE IF EXISTS shelter_stay CASCADE;
 DROP TABLE IF EXISTS stay CASCADE;
 DROP TABLE IF EXISTS stay_owner CASCADE;
 DROP TABLE IF EXISTS stay_shelter CASCADE;
@@ -11,16 +9,11 @@ DROP TABLE IF EXISTS shop CASCADE;
 DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS ownership CASCADE;
 
---DROP SEQUENCE IF EXISTS owner_id_seq;
---DROP SEQUENCE IF EXISTS cat_id_seq;
 DROP SEQUENCE IF EXISTS shelter_id_seq;
 DROP SEQUENCE IF EXISTS stay_id_seq;
 DROP SEQUENCE IF EXISTS ownership_id_seq;
 
---CREATE SEQUENCE owner_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
-
 CREATE TABLE owner (
-    --id bigint DEFAULT nextval('owner_id_seq'::regclass) NOT NULL PRIMARY KEY,
     id CHAR(36) NOT NULL UNIQUE,
     level smallint DEFAULT 1,
     img VARCHAR(30) DEFAULT 'rihanna_rqthkr',
@@ -37,16 +30,11 @@ CREATE TABLE owner (
       ON DELETE CASCADE
 );
 
---CREATE SEQUENCE cat_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
-
 CREATE TABLE cat (
-    --id bigint DEFAULT nextval('cat_id_seq'::regclass) NOT NULL PRIMARY KEY,
     id CHAR(36) NOT NULL UNIQUE,
     level smallint DEFAULT 1,
     img VARCHAR(50) DEFAULT 'egyptianmau300_y56gdt',
     nickname character varying(255) NOT NULL UNIQUE,
-    --password character varying(30) NOT NULL,
-    --email character varying(255) NOT NULL UNIQUE,
     gender character varying(30) NOT NULL,
     check(gender in ('male', 'female')),
     race character varying(30) NOT NULL,
@@ -95,47 +83,11 @@ INSERT INTO shelter (name, password, img, email, max_amount_of_cats) VALUES
 ('General state shelter', 'hesloheslo', 'shelter1_caab19', 'somerandommail', 20),
 ('London luxury shelter for cats', 'hesloheslo', 'shelter2_ahn1os', 'somerandommail2', 10);
 
--- CREATE TABLE owner_stay (
---     id_cat CHAR(36) NOT NULL,
---     id_owner CHAR(36) NOT NULL,
---     start_date timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
---     end_date timestamp with time zone DEFAULT NULL,
---     CONSTRAINT fk_owner_stay_cat
---       FOREIGN KEY(id_cat) 
--- 	  REFERENCES cat(id)
---       ON DELETE CASCADE,
---     CONSTRAINT fk_owner_stay_owner
---       FOREIGN KEY(id_owner) 
--- 	  REFERENCES owner(id)
---       ON DELETE CASCADE
--- );
-
--- --INSERT INTO owner_stay (id_cat, id_owner) VALUES 
--- --(1, 1), 
--- --(2, 2);
-
--- CREATE TABLE shelter_stay (
---     id_cat CHAR(36) NOT NULL,
---     id_shelter bigint NOT NULL,
---     start_date timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
---     end_date timestamp with time zone DEFAULT NULL,
---     CONSTRAINT fk_shelter_stay_cat
---       FOREIGN KEY(id_cat) 
--- 	  REFERENCES cat(id)
---       ON DELETE CASCADE,
---     CONSTRAINT fk_shelter_stay_owner
---       FOREIGN KEY(id_shelter) 
--- 	  REFERENCES shelter(id)
---       ON DELETE CASCADE
--- );
-
 CREATE SEQUENCE stay_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
 
 CREATE TABLE stay (
     id bigint DEFAULT nextval('stay_id_seq'::regclass) NOT NULL PRIMARY KEY,
     id_cat CHAR(36) NOT NULL,
-    -- id_owner CHAR(36) NULL,
-    -- id_shelter bigint NULL,
     type CHAR(1) NOT NULL check(type in ('o', 's')),
     start_date timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     end_date timestamp with time zone DEFAULT NULL,
@@ -143,17 +95,7 @@ CREATE TABLE stay (
     CONSTRAINT fk_cat_stay
       FOREIGN KEY(id_cat) 
 	  REFERENCES cat(id)
-      ON DELETE CASCADE -- ,
-
-    -- CONSTRAINT fk_owner_stay
-    --   FOREIGN KEY(id_owner) 
-	  -- REFERENCES owner(id)
-    --   ON DELETE CASCADE,
-
-    -- CONSTRAINT fk_shelter_stay
-    --   FOREIGN KEY(id_shelter) 
-	  -- REFERENCES shelter(id)
-    --   ON DELETE CASCADE
+      ON DELETE CASCADE
 );
 
 CREATE TABLE stay_owner (
@@ -202,10 +144,6 @@ CREATE TABLE catfriends (
       ON DELETE CASCADE
 );
 
---INSERT INTO shelter_stay (id_cat, id_shelter) VALUES 
---(1, 1), 
---(2, 2);
-
 CREATE TABLE shop (
     name character varying(255) NOT NULL UNIQUE,
     description character varying(255) NOT NULL,
@@ -239,24 +177,4 @@ user_id CHAR(36) NOT NULL,
 name character varying(255) NOT NULL,
 type CHAR(1),
 check(type in ('c', 'o'))
--- CONSTRAINT fk_ownership_user
---       FOREIGN KEY(user_id) 
--- 	  REFERENCES emailpassword_users(user_id)
---       ON DELETE CASCADE
 );
-
--- CREATE TABLE owner_ownership (
--- ownership_id CHAR(36) NOT NULL UNIQUE,
--- owner_id CHAR(36) NOT NULL,
-    
---     CONSTRAINT fk_owner_ownership
---       FOREIGN KEY(owner_id) 
--- 	  REFERENCES owner(id)
---       ON DELETE CASCADE,
-
---     CONSTRAINT fk_ownership1
---       FOREIGN KEY(ownership_id) 
--- 	  REFERENCES stay(id)
---       ON DELETE CASCADE
-
--- );
